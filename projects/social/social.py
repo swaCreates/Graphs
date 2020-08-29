@@ -1,3 +1,5 @@
+import random
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -5,7 +7,11 @@ class User:
 class SocialGraph:
     def __init__(self):
         self.last_id = 0
+        # nodes / vertices
+        # maps IDs to User objs (lookup tbl for User Objects given IDs) 
         self.users = {}
+        # adjacency list / edges
+        # maps user_id to a list of other words (who are thier friends)
         self.friendships = {}
 
     def add_friendship(self, user_id, friend_id):
@@ -28,7 +34,14 @@ class SocialGraph:
         self.users[self.last_id] = User(name)
         self.friendships[self.last_id] = set()
 
+    def fisher_yates_shuffle(self, l):
+        for i in range(0, len(l)):
+            random_index = random.randint(i, len(l) - 1)
+            l[random_index], l[i] = l[i], l[random_index]
+
     def populate_graph(self, num_users, avg_friendships):
+        # Helps populate graph without manual entering
+
         """
         Takes a number of users and an average number of friendships
         as arguments
@@ -45,8 +58,30 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        for i in range(0, num_users):
+            self.add_user(f'User {i + 1}')
 
+        possible_friendships = []
         # Create friendships
+        # Generate all possible friendships
+        # Avoid duplicate friendships / increment +1 on friend
+        for user_id in self.users:
+            for friend_id in range(user_id + 1, self.last_id + 1):
+                # user_id == friend_id cannot happen
+                # if friendship between user_id & friend_id already exists
+                # don't add friendship between user_id and friend_id
+                possible_friendships.append((user_id, friend_id)) # creating tuple
+
+        # Randomly selected X friends
+        # shuffle friends
+        self.fisher_yates_shuffle(possible_friendships)
+
+        # the formula of x is numUsers * avgFriendships // 2
+        num_friendships = num_users * avg_friendships // 2
+        
+        for i in range(0, num_friendships):
+            friendships = possible_friendships[i]
+            self.add_friendship(friendships[0], friendships[1])
 
     def get_all_social_paths(self, user_id):
         """

@@ -1,6 +1,11 @@
 # using DFT
 # will require a Stack data structure
 
+# steps for solving problems with graphs:
+    # what are our nodes/vertices?
+    # what are our edges?
+
+
 class Graph:
     def __init__(self):
         self.vertices = {}
@@ -10,8 +15,8 @@ class Graph:
             self.vertices[vertex] = set()
     
     def add_edge(self, v1, v2):
-        # if v1 in self.vertices and v2 in self.vertices:
-        self.vertices[v1].add(v2)
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex):
         return self.vertices[vertex]
@@ -44,34 +49,33 @@ def graph_builder(ancestors):
     return graph
 
 def earliest_ancestor(ancestors, starting_node):
-   graph = graph_builder(ancestors)
+    graph = graph_builder(ancestors)
 
-   s = Stack()
-   s.push([starting_node])
+    s = Stack()
+    s.push([starting_node])
 
-   visited = set()
+    visited = set()
 
-   longest_path = []
-   oldest_node = -1
+    longest_path = [starting_node] # may be 1 or the beginning node
+    earliest_node = -1
 
-   while s.size() > 0:
-    path = s.pop()
-    curr_node = path[-1]
+    while s.size() > 0:
+        path = s.pop()
+        curr_node = path[-1] # start from last node in path
 
     # if path is longer, or path is equal but the id is smaller
-    if (len(path) > len(longest_path)) or (len(path) == len(longest_path) and curr_node < oldest_node):
-        longest_path = path
-        oldest_node = longest_path[-1]
+        if (len(path) > len(longest_path)) or (len(path) == len(longest_path) and curr_node < earliest_node):
+            longest_path = path
+            earliest_node = longest_path[-1] # start from last node in path
 
-    if curr_node not in visited:
-        visited.add(curr_node)
+        if curr_node not in visited:
+            visited.add(curr_node)
 
-        neighbors = graph.get_neighbors(curr_node)
+            neighbors = graph.get_neighbors(curr_node)
 
-        for neighbor in neighbors:
-            new_path = path + [neighbor]
-            s.push(new_path)
-
-    print(longest_path[-1])
+            for neighbor in neighbors:
+                new_path = path.copy()
+                new_path.append(neighbor)
+                s.push(new_path)
             
-    return longest_path[-1]
+    return earliest_node
