@@ -52,33 +52,61 @@ player = Player(world.starting_room)
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
-traversal_path = []
+traversal_path = ['n', 's']
 
 room = player.current_room
 
 s = Stack()
 s.push(room)
 
-my_dict = {}
+room_dict = {}
+room_directions = {
+    'n': '?',
+    's': '?',
+    'e': '?',
+    'w': '?',
+}
 
 while s.size() > 0:
     curr_room = s.pop()
-    my_dict[curr_room] = player.current_room.get_exits()
+    room_dict[0] = room_directions
 
-    
-    
+
     # curr_obj = s.pop()
     # curr_room = curr_obj['starting_room']
     # curr_path = curr_obj['path']
 
 # Create Traversal Graph / Adjacency List
 
-# what are my vertices? .....maybe pressing key of vertex or room
-# what are my edges? ..returns all the edges or directions
+# what are my vertices? .....room
+# what are my edges? .....directions
 
-    
+# Am I using a Queue(BFS) == if '?' or Stack (DFS) == initial traversal?
 
-# Am I using a Queue or Stack?
+
+"""You know you are done when you have exactly 500 entries (0-499) in your graph and no '?' in the adjacency dictionaries. To do this, you will need to write a traversal algorithm that logs the path into traversal_path as it walks."""
+
+# rooms should be stored as int (key) vertex
+# traversal direction should be stored as input (value) edges
+
+# DFS
+# push starting room onto stack
+# while the stack isn't empty, pop the curr room off stack
+# check the room for optional directions
+    # add room to visited
+    # check for connected room (edges) with ? marks (I think)
+    # if moveable go explore
+# BFS
+    # else if stuck
+    # retrace steps until you can find an unexplored route
+
+
+# Still confused on how I would be using traversal_path
+# or
+# If I use the room_directions, how would I make changes to that or use that or should I make changes at all
+
+
+
 
 
 
