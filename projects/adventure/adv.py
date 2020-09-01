@@ -8,6 +8,31 @@ from ast import literal_eval
 # Load world
 world = World()
 
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+    def push(self, value):
+        self.stack.append(value)
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.stack)
 
 # You may uncomment the smaller graphs for development and testing purposes.
 map_file = "maps/test_line.txt"
@@ -29,12 +54,33 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+room = player.current_room
+
+s = Stack()
+s.push(room)
+
+my_dict = {}
+
+while s.size() > 0:
+    curr_room = s.pop()
+    my_dict[curr_room] = player.current_room.get_exits()
+
+    
+    
+    # curr_obj = s.pop()
+    # curr_room = curr_obj['starting_room']
+    # curr_path = curr_obj['path']
+
 # Create Traversal Graph / Adjacency List
 
 # what are my vertices? .....maybe pressing key of vertex or room
 # what are my edges? ..returns all the edges or directions
 
+    
+
 # Am I using a Queue or Stack?
+
+
 
 
 # TRAVERSAL TEST
