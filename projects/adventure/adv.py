@@ -88,7 +88,7 @@ while len(rooms_visited) < len(world.rooms):
             curr_path.append(reverse_path_choice)
             # allow player to travel in reverse also
             reverse_dir = reverse_path_choice[0]
-            # player.travel(reverse_dir)
+            player.travel(reverse_dir)
 
 # 4. make previous direction the room id
 # 5. repeat steps 1 - 3
