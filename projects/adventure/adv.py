@@ -9,8 +9,8 @@ from ast import literal_eval
 world = World()
 
 # You may uncomment the smaller graphs for development and testing purposes.
-# map_file = "/Users/swa_isthecreator/Documents/Lambda-CS-Projects/Graphs/projects/adventure/maps/test_line.txt"
-map_file = "/Users/swa_isthecreator/Documents/Lambda-CS-Projects/Graphs/projects/adventure/maps/test_cross.txt"
+map_file = "/Users/swa_isthecreator/Documents/Lambda-CS-Projects/Graphs/projects/adventure/maps/test_line.txt"
+# map_file = "/Users/swa_isthecreator/Documents/Lambda-CS-Projects/Graphs/projects/adventure/maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
 # map_file = "maps/main_maze.txt"
@@ -71,7 +71,9 @@ while len(rooms_visited) < len(world.rooms):
     # 2. choose to go in a random direction that hasn't been visited  
     for exit in exits:
         curr_room.get_room_in_direction(exit)
-        print(f'These are my directions:', curr_room.get_room_in_direction(exit))
+        print(f'These are my directions:', curr_room.get_room_in_direction(exits))
+
+        directions = curr_room.get_room_in_direction(exits)
 
     # 3. move to direction / make sure our choice logs the direction chosen
         if curr_room.id not in rooms_visited:
@@ -83,12 +85,16 @@ while len(rooms_visited) < len(world.rooms):
             player.travel(path_choice)
             traversal_path.append(path_choice)
             print(f'My path:', traversal_path)
+
+            # another conditon should be held here
+            # I think if my directions are None go back the reverse way
+
             # log the reverse direction of the path taken
             reverse_path_choice = reverse_dict[path_choice]
             curr_path.append(reverse_path_choice)
             # allow player to travel in reverse also
             reverse_dir = reverse_path_choice[0]
-            player.travel(reverse_dir)
+            # player.travel(reverse_dir)
 
 # 4. make previous direction the room id
 # 5. repeat steps 1 - 3
