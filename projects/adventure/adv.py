@@ -43,7 +43,7 @@ player = Player(world.starting_room)
 
 traversal_path = []
 
-curr_path = []
+rev_path = []
 
 rooms_visited = set()
 
@@ -53,8 +53,6 @@ reverse_dict= {
     'w': 'e',
     'e': 'w'
 }
-
-
 
 while len(rooms_visited) < len(world.rooms):
 
@@ -68,33 +66,40 @@ while len(rooms_visited) < len(world.rooms):
     # use room.getexits() ==== will return arr of n,s,e,w
     exits = curr_room.get_exits()
 
-    # 2. choose to go in a random direction that hasn't been visited  
-    for exit in exits:
-        curr_room.get_room_in_direction(exit)
-        print(f'These are my directions:', curr_room.get_room_in_direction(exits))
 
-        directions = curr_room.get_room_in_direction(exits)
+    # 2. choose to go in a random direction that hasn't been visited  
+    # for exit in exits:
+    #     curr_room.get_room_in_direction(exit)
+    #     # print(f'These are my directions:', curr_room.get_room_in_direction(exits))
+
+    #     directions = curr_room.get_room_in_direction(exits)
+
+    
 
     # 3. move to direction / make sure our choice logs the direction chosen
-        if curr_room.id not in rooms_visited:
-            # add the curr_room into visited
-            rooms_visited.add(curr_room.id)
-            print(rooms_visited)
-            
-            path_choice = random.choice(exit)
-            player.travel(path_choice)
-            traversal_path.append(path_choice)
-            print(f'My path:', traversal_path)
+    if curr_room.id not in rooms_visited:
+        # add the curr_room into visited
+        rooms_visited.add(curr_room.id)
+        print(rooms_visited)
 
-            # another conditon should be held here
-            # I think if my directions are None go back the reverse way
+        print(f'These are my directions:', curr_room.get_room_in_direction(exits))
+        
+        path_choice = random.choice(exits)
+        player.travel(path_choice)
+        traversal_path.append(path_choice)
 
-            # log the reverse direction of the path taken
-            reverse_path_choice = reverse_dict[path_choice]
-            curr_path.append(reverse_path_choice)
-            # allow player to travel in reverse also
-            reverse_dir = reverse_path_choice[0]
-            # player.travel(reverse_dir)
+    
+        # another conditon should be held here
+        # I think if my directions are None go back the reverse way
+    
+        # log the reverse direction of the path taken
+        reverse_path_choice = reverse_dict[path_choice]
+        rev_path.append(reverse_path_choice)
+        # allow player to travel in reverse also
+        reverse_dir = reverse_path_choice[0]
+        # player.travel(reverse_dir)
+
+    print(f'My path:', traversal_path)
 
 # 4. make previous direction the room id
 # 5. repeat steps 1 - 3
